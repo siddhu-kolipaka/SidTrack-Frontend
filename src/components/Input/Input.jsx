@@ -26,7 +26,7 @@ const Input = ({ color1, color2, duration = 2, children, className = "" }) => {
       onMouseLeave={() => {
         setInteractionState(null);
       }}
-      className={`p-[3px] rounded-full flex justify-center items-center ${className}`}
+      className={` ${className} `}
     >
       <div
         onFocus={() => {

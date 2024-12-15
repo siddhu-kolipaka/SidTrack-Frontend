@@ -4,12 +4,12 @@ import { motion } from "motion/react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import { login, sendVerificationToken } from "../../store/auth/authThunks";
+import { deleteAccount, logout } from "../../store/auth/authThunks";
 import { useNavigate } from "react-router";
 import Spinner from "../Spinner/Spinner";
 import { Link } from "react-router";
 
-const Login = () => {
+const DeleteAccount = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -40,7 +40,7 @@ const Login = () => {
     setPassword(value);
   };
 
-  const handleSubmitLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
@@ -49,25 +49,15 @@ const Login = () => {
     }
 
     try {
-      const result = await dispatch(login({ email, password }));
+      const result = await dispatch(deleteAccount({ email, password }));
       if (result.meta.requestStatus === "fulfilled") {
-        toast.success("Login successful!");
+        toast.success(result.payload.message);
         setEmail("");
         setPassword("");
-        const { user } = result.payload;
-        if (!user.isVerified) {
-          dispatch(sendVerificationToken({ email }));
-          toast.info("Verify your email to continue!");
-          setTimeout(() => {
-            navigate("/verify-email");
-          }, 2000);
-        } else {
-          setTimeout(() => {
-            navigate("/");
-          }, 2000);
-        }
+        await dispatch(logout());
+        navigate("/");
       } else {
-        const errorMsg = result.payload || "Login failed. Please try again.";
+        const errorMsg = result.payload || "Deletion failed. Please try again.";
         toast.error(errorMsg);
       }
     } catch (err) {
@@ -93,12 +83,12 @@ const Login = () => {
         transition={{ duration: 1 }}
         className="rounded-xl md:w-[50dvw] flex flex-col md:flex-row md:justify-between p-4 md:p-8 border border-border bg-back shadow-2xl"
       >
-        <div className="text-2xl text-heading font-bold uppercase text-center mb-4">
-          Log in
+        <div className="text-xl text-heading font-bold uppercase text-center mb-4">
+          Delete Account
         </div>
         <form
           className="flex flex-col gap-4 p-4 w-[80dvw] md:w-1/2"
-          onSubmit={handleSubmitLogin}
+          onSubmit={handleSubmit}
         >
           <Input color1="black" color2="#7f5af0" className="rounded-xl p-px">
             <input
@@ -129,7 +119,7 @@ const Login = () => {
             className="rounded-xl bg-pri w-full h-12"
             disabled={loading}
           >
-            {loading ? <Spinner /> : "Log in"}
+            {loading ? <Spinner /> : "Delete Account"}
           </motion.button>
         </form>
       </motion.div>
@@ -137,4 +127,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default DeleteAccount;

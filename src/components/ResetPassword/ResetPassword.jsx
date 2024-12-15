@@ -1,22 +1,22 @@
-import { useState } from "react";
-import Input from "../Input/Input";
-import { motion } from "motion/react";
-import { useNavigate } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { signup } from "../../store/auth/authThunks";
-import { useDispatch, useSelector } from "react-redux";
+import { motion } from "motion/react";
+import { useState } from "react";
 import Spinner from "../Spinner/Spinner";
+import Input from "../Input/Input";
+import { useNavigate, useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, resetPassword } from "@/store/auth/authThunks";
 
-const Signup = () => {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.auth.loading);
+
+  const params = useParams();
+  const { token } = params;
 
   const validatePassword = (pass, confirmPass) => {
     if (!pass || !confirmPass) {
@@ -30,28 +30,6 @@ const Signup = () => {
     }
   };
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setErrorMessage("Invalid email format");
-      return false;
-    }
-    setErrorMessage("");
-    return true;
-  };
-
-  const handleEmailChange = (e) => {
-    const value = e.target.value;
-    setEmail(value);
-    if (!validateEmail(value)) {
-      return;
-    }
-  };
-
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
-
   const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword(value);
@@ -63,37 +41,34 @@ const Signup = () => {
     setConfirmPassword(value);
     validatePassword(password, value);
   };
-
-  const handleSubmitSignup = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!email || !username || !password || !confirmPassword) {
-      setErrorMessage("All fields are required.");
-      return;
-    }
-
-    if (errorMessage && errorMessage !== "Passwords matched") {
-      toast.error("Please fix the errors before submitting.");
-      return;
-    }
-
     try {
-      const result = await dispatch(signup({ email, username, password }));
+      const result = await dispatch(resetPassword({ password, token }));
       if (result.meta.requestStatus === "fulfilled") {
         toast.success(result.payload.message);
-        setTimeout(() => navigate("/verify-email"), 2000);
+        setPassword("");
+        setConfirmPassword("");
       } else {
-        const errorMsg = result.payload || "Signup failed";
+        const errorMsg = result.payload || " Please try again.";
         toast.error(errorMsg);
       }
-    } catch (e) {
-      console.error(e);
-      toast.error("An unexpected error occurred. Please try again.");
+      dispatch(logout());
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    } catch (err) {
+      if (err.response && err.response.data) {
+        toast.error(err.response.data.message || "Server error occurred.");
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
     }
   };
 
   return (
-    <div className="w-full h-screen bg-back flex items-center justify-center">
+    <div className="w-screen h-[100dvh]  bg-back flex justify-center items-center">
       <ToastContainer
         position="top-right"
         autoClose={2000}
@@ -104,33 +79,15 @@ const Signup = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        className="rounded-xl md:w-[50dvw] flex flex-col md:flex-row md:justify-between p-4 md:p-8 bg-back border border-border shadow-xl"
+        className="rounded-xl md:w-[50dvw] flex flex-col md:flex-row md:justify-between p-4 md:p-8 border border-border bg-back shadow-2xl"
       >
-        <div className="text-2xl text-heading font-bold uppercase text-center mb-4">
-          Sign up
+        <div className="text-xl text-heading font-bold uppercase text-center mb-4">
+          Reset Password
         </div>
         <form
-          className="flex flex-col w-[80dvw] gap-4 p-4 md:w-1/2"
-          onSubmit={handleSubmitSignup}
+          className="flex flex-col gap-4 p-4 w-[80dvw] md:w-1/2"
+          onSubmit={handleSubmit}
         >
-          <Input color1="black" color2="#7f5af0" className="rounded-xl p-px">
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={handleEmailChange}
-              className="rounded-xl focus:outline-none h-12 text-txt px-4 bg-back w-full"
-            />
-          </Input>
-          <Input color1="black" color2="#7f5af0" className="rounded-xl p-px ">
-            <input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={handleUsernameChange}
-              className="rounded-xl focus:outline-none h-12 text-txt px-4 bg-back w-full"
-            />
-          </Input>
           <Input color1="black" color2="#7f5af0" className="rounded-xl p-px">
             <input
               type="password"
@@ -167,7 +124,7 @@ const Signup = () => {
             className="rounded-xl bg-pri w-full h-12"
             disabled={loading}
           >
-            {loading ? <Spinner /> : "Sign up"}
+            {loading ? <Spinner /> : "Reset Password"}
           </motion.button>
         </form>
       </motion.div>
@@ -175,4 +132,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default ResetPassword;

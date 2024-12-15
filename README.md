@@ -1,7 +1,7 @@
-login and signup frontend
-a starting frontend template for login and signup
+JWT Authenticated [Highly advanced implementation]
 
-📋 Signup Page UI
-🔓 Login Page UI
-✅ Email Verification Page UI
-🔄 Forgot Password UI
+1. HTTP-only cookies for refresh tokens: To Prevent token theft via JavaScript or XSS. [Cross-Site Scripting (XSS)]
+2. Secure attribute for cookies: Ensured tokens are only sent over HTTPS.
+3. SameSite attribute: Mitigate CSRF attacks. [Cross-Site Request Forgery (CSRF)]
+4. Short-lived access tokens: Limiting the window of misuse if a token is stolen.
+5. Blacklist support

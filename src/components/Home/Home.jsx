@@ -1,8 +1,8 @@
 const Home = () => {
   return (
     <>
-      <div className="w-[100dvw] h-screen grid place-content-center bg-back"></div>
-      <div className="w-[100dvw] h-screen  bg-gray-700"></div>
+      <div className="w-screen h-[100dvh] grid place-content-center bg-back"></div>
+      <div className="w-screen h-screen  bg-gray-700"></div>
     </>
   );
 };
