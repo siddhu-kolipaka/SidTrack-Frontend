@@ -1,9 +1,8 @@
 import { Route, Routes } from "react-router";
-import Login from "./components/Login/Login";
-import Signup from "./components/Signup/Signup";
-import Home from "./components/Home/Home";
+import Login from "./pages/Login/Login";
+import Signup from "./pages/Signup/Signup";
 import Navbar from "./components/Navbar/Navbar";
-import VerifyEmail from "./components/VerifyEmail/VerifyEmail";
+import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 
 import { motion, useScroll, useMotionValueEvent } from "motion/react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,16 +11,23 @@ import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { getNewAccessToken } from "./store/auth/authThunks";
 import { setUser } from "./store/auth/authSlice";
-import Profile from "./components/Profile/Profile";
-import Error404 from "./components/Error404/Error404";
-import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
-import DeleteAccount from "./components/DeleteAccount/DeleteAccount";
-import ResetPassword from "./components/ResetPassword/ResetPassword";
+import Profile from "./pages/Profile/Profile";
+import Error404 from "./pages/Error404/Error404";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+import DeleteAccount from "./pages/DeleteAccount/DeleteAccount";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import TransactionLog from "./components/TransactionLog/TransactionLog";
+import Portfolio from "./pages/Portfolio/Portfolio";
+import Tracker from "./pages/Tracker/Tracker";
+import Loading from "./pages/Loading/Loading";
+import InvestmentCalc from "./pages/InvestmentCalc/InvestmentCalc";
+import About from "./pages/About/About";
 
 const App = () => {
   const { scrollY } = useScroll();
   const dispatch = useDispatch();
   const { scrollDirection } = useSelector((state) => state.scrollDirection);
+
   useMotionValueEvent(scrollY, "change", (current) => {
     const diff = current - scrollY.getPrevious();
     if (scrollDirection == "up" && diff > 0) {
@@ -33,46 +39,45 @@ const App = () => {
 
   const { user, isAuthenticated } = useSelector((state) => state.auth);
 
+  // Persistant login
+  //rehydrate
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) {
-      dispatch(getNewAccessToken());
+      dispatch(getNewAccessToken()).then(() => {});
       dispatch(setUser(storedUser));
     }
-    localStorage.removeItem("user");
   }, [dispatch]);
 
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      if (user) {
-        localStorage.setItem("user", JSON.stringify(user));
-      }
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [user]);
-
   return (
-    <motion.div className="relative">
+    <motion.div className="relative w-full">
       <Navbar />
       <Routes>
-        <Route index element={<Home />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/signup" element={<Signup />}></Route>
-        <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
-        <Route path="/resetPassword/:token" element={<ResetPassword />}></Route>
-        {(!user || !user.isVerified) && (
-          <>
-            <Route path="/verify-email" element={<VerifyEmail />}></Route>
-          </>
+        <Route index element={<About />}></Route>
+
+        {!user?.isVerified && (
+          <Route path="/verifyEmail" element={<VerifyEmail />}></Route>
         )}
 
-        {isAuthenticated && (
+        {isAuthenticated ? (
           <>
             <Route path="/profile" element={<Profile />}></Route>
             <Route path="/deleteAccount" element={<DeleteAccount />}></Route>
+            <Route path="/transactionLog" element={<TransactionLog />}></Route>
+            <Route path="/tracker" element={<Tracker />}></Route>
+            <Route path="/portfolio" element={<Portfolio />}></Route>
+            <Route path="/calc" element={<InvestmentCalc />}></Route>
+          </>
+        ) : (
+          <>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/signup" element={<Signup />}></Route>
+            <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
+            <Route
+              path="/resetPassword/:token"
+              element={<ResetPassword />}
+            ></Route>
+            <Route path="/loading" element={<Loading />}></Route>
           </>
         )}
 

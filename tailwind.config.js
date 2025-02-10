@@ -6,19 +6,41 @@ export default {
     extend: {
       keyframes: {
         "caret-blink": {
-          "0%,70%,100%": { opacity: "1" },
-          "20%,50%": { opacity: "0" },
+          "0%,70%,100%": {
+            opacity: "1",
+          },
+          "20%,50%": {
+            opacity: "0",
+          },
+        },
+        "accordion-down": {
+          from: {
+            height: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
+        },
+        "accordion-up": {
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0",
+          },
         },
       },
       animation: {
         "caret-blink": "caret-blink 1.25s ease-out infinite",
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
       colors: {
-        back: "#16161a",
-        heading: "#fffffe",
-        txt: "#94a1b2",
-        pri: "#7f5af0",
-        border: "#282829",
+        back: "#1E1E1E",
+        heading: "#FFFAF0",
+        txt: "#B0A8B9",
+        pri: "#4CAF50",
+        border: "#2A2A2A",
         sec: "#3da9fc",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -62,7 +84,6 @@ export default {
       },
       borderRadius: {
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
         md: "calc(var(--radius) - 4px)",
       },
     },
