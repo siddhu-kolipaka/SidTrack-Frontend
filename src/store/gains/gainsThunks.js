@@ -8,7 +8,7 @@ export const deleteGains = createAsyncThunk(
     const result = await dispatch(getNewAccessToken());
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/gains/?_id=${_id}`,
+        `https://sidtrack-backend.onrender.com/api/gains/?_id=${_id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -34,7 +34,7 @@ export const getGains = createAsyncThunk(
 
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/gains?from=${from}&to=${to}`,
+        `https://sidtrack-backend.onrender.com/api/gains?from=${from}&to=${to}`,
         {
           headers: {
             "Content-Type": "application/json",

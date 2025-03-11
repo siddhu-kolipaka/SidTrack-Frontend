@@ -8,7 +8,7 @@ export const deleteTransaction = createAsyncThunk(
     const result = await dispatch(getNewAccessToken());
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/tracker/delete-transaction?_id=${_id}`,
+        `https://sidtrack-backend.onrender.com/api/tracker/delete-transaction?_id=${_id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -33,7 +33,7 @@ export const addTransaction = createAsyncThunk(
     const result = await dispatch(getNewAccessToken());
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/tracker/add-transaction",
+        "https://sidtrack-backend.onrender.com/api/tracker/add-transaction",
         { ...formData, date },
         {
           headers: {
@@ -59,7 +59,7 @@ export const getTransactions = createAsyncThunk(
 
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/tracker/get-transactions?from=${from}&to=${to}`,
+        `https://sidtrack-backend.onrender.com/api/tracker/get-transactions?from=${from}&to=${to}`,
         {
           headers: {
             "Content-Type": "application/json",

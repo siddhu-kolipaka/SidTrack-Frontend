@@ -8,7 +8,7 @@ export const getPortfolio = createAsyncThunk(
     const result = await dispatch(getNewAccessToken());
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/stock/portfolio",
+        "https://sidtrack-backend.onrender.com/api/stock/portfolio",
         {
           headers: {
             "Content-Type": "application/json",
@@ -32,7 +32,7 @@ export const deleteTransaction = createAsyncThunk(
     const result = await dispatch(getNewAccessToken());
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/stock/delete-transaction?_id=${_id}`,
+        `https://sidtrack-backend.onrender.com/api/stock/delete-transaction?_id=${_id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -59,7 +59,7 @@ export const addTransaction = createAsyncThunk(
     const result = await dispatch(getNewAccessToken());
     try {
       const response = await axios.post(
-        `http://localhost:3000/api/stock/add-transaction`,
+        `https://sidtrack-backend.onrender.com/api/stock/add-transaction`,
         { stockSymbol, quantity, price, action, date },
         {
           headers: {
@@ -87,7 +87,7 @@ export const getTransactions = createAsyncThunk(
     const result = await dispatch(getNewAccessToken());
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/stock/transactions?from=${from}&to=${to}`,
+        `https://sidtrack-backend.onrender.com/api/stock/transactions?from=${from}&to=${to}`,
         {
           headers: {
             "Content-Type": "application/json",

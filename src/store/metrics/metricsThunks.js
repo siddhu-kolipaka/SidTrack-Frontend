@@ -6,7 +6,7 @@ export const updateMetrics = createAsyncThunk(
   async ({ type }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `http://localhost:3000/api/metrics`,
+        `https://sidtrack-backend.onrender.com/api/metrics`,
         { type },
         {
           headers: {
@@ -28,12 +28,15 @@ export const getMetrics = createAsyncThunk(
   "metrics/getMetrics",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/metrics`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        `https://sidtrack-backend.onrender.com/api/metrics`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
 
       return response.data;
     } catch (err) {

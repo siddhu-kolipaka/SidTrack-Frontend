@@ -6,7 +6,7 @@ export const login = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
+        "https://sidtrack-backend.onrender.com/api/auth/login",
         { email, password },
         {
           headers: { "Content-Type": "application/json" },
@@ -30,7 +30,7 @@ export const signup = createAsyncThunk(
   async ({ email, username, password }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/signup",
+        "https://sidtrack-backend.onrender.com/api/auth/signup",
         { email, username, password },
         { headers: { "Content-Type": "application/json" } }
       );
@@ -49,7 +49,7 @@ export const verifyEmail = createAsyncThunk(
   async ({ verificationToken }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/verify-email",
+        "https://sidtrack-backend.onrender.com/api/auth/verify-email",
         { verificationToken },
         { headers: { "Content-Type": "application/json" } }
       );
@@ -70,7 +70,7 @@ export const sendVerificationToken = createAsyncThunk(
   async ({ email }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/send-verification-token",
+        "https://sidtrack-backend.onrender.com/api/auth/send-verification-token",
         { email },
         { headers: { "Content-Type": "application/json" } }
       );
@@ -90,7 +90,7 @@ export const getNewAccessToken = createAsyncThunk(
   async (_, { dispatch, rejectWithValue }) => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/auth/new-access-token",
+        "https://sidtrack-backend.onrender.com/api/auth/new-access-token",
         {
           headers: {
             "Content-Type": "application/json",
@@ -118,7 +118,7 @@ export const logout = createAsyncThunk(
       const state = await getState();
       const { username, email } = state.auth.user;
       const response = await axios.post(
-        "http://localhost:3000/api/auth/logout",
+        "https://sidtrack-backend.onrender.com/api/auth/logout",
         { username, email },
         {
           headers: {
@@ -144,7 +144,7 @@ export const forgotPassword = createAsyncThunk(
   async ({ email }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/forgot-password",
+        "https://sidtrack-backend.onrender.com/api/auth/forgot-password",
         { email },
         {
           headers: { "Content-Type": "application/json" },
@@ -167,7 +167,7 @@ export const resetPassword = createAsyncThunk(
   async ({ password, token }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `http://localhost:3000/api/auth/reset-password/${token}`,
+        `https://sidtrack-backend.onrender.com/api/auth/reset-password/${token}`,
         { password },
         {
           headers: { "Content-Type": "application/json" },
@@ -191,7 +191,7 @@ export const deleteAccount = createAsyncThunk(
     const result = await dispatch(getNewAccessToken());
     try {
       const response = await axios.post(
-        `http://localhost:3000/api/auth/delete-account`,
+        `https://sidtrack-backend.onrender.com/api/auth/delete-account`,
         { email, password },
         {
           headers: {

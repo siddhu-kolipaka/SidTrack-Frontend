@@ -8,7 +8,7 @@ export const deleteWealth = createAsyncThunk(
     const result = await dispatch(getNewAccessToken());
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/wealth/?date=${date}`,
+        `https://sidtrack-backend.onrender.com/api/wealth/?date=${date}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -33,7 +33,7 @@ export const updateWealth = createAsyncThunk(
     const result = await dispatch(getNewAccessToken());
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/wealth",
+        "https://sidtrack-backend.onrender.com/api/wealth",
         { date, wealth },
         {
           headers: {
@@ -59,13 +59,16 @@ export const getWealth = createAsyncThunk(
     const result = await dispatch(getNewAccessToken());
 
     try {
-      const response = await axios.get(`http://localhost:3000/api/wealth`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${result.payload.accessToken}`,
-        },
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        `https://sidtrack-backend.onrender.com/api/wealth`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${result.payload.accessToken}`,
+          },
+          withCredentials: true,
+        }
+      );
       return response.data;
     } catch (err) {
       return rejectWithValue(
