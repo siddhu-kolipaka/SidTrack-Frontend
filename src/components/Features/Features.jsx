@@ -55,7 +55,7 @@ const Features = ({ setPosition }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5 }}
-            className="absolute right-0 top-12 bg-back border border-border rounded-md shadow-lg"
+            className="absolute right-0 top-12 bg-back border border-pri rounded-md shadow-lg"
           >
             <div className="flex flex-col p-2">
               {routes.map((item, index) => (
@@ -63,7 +63,7 @@ const Features = ({ setPosition }) => {
                   key={index}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="p-2 cursor-pointer font-medium uppercase hover:bg-pri hover:text-back rounded-md text-txt text-center"
+                  className="p-2 cursor-pointer font-medium uppercase hover:underline hover:underline-offset-4 rounded-md text-pri text-center"
                 >
                   <Link to={item.to} className="w-full block">
                     {item.label}

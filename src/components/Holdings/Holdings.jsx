@@ -45,8 +45,8 @@ const Holdings = ({ data, setActiveIndex }) => {
                           stock.qty,
                       0
                     ) > 0
-                      ? "text-green-600"
-                      : "text-red-600"
+                      ? "text-pri"
+                      : "text-brightRed"
                   } `}
                 >
                   {tx.stocks.reduce(
@@ -73,8 +73,8 @@ const Holdings = ({ data, setActiveIndex }) => {
                   className={` ${
                     tx.stocks.reduce((total, stock) => total + stock.gain, 0) >
                     0
-                      ? "text-green-600"
-                      : "text-red-600"
+                      ? "text-pri"
+                      : "text-brightRed"
                   }`}
                 >
                   {tx.stocks.reduce((total, stock) => total + stock.gain, 0) > 0
@@ -98,8 +98,8 @@ const Holdings = ({ data, setActiveIndex }) => {
                   className={` ${
                     tx.stocks.reduce((total, stock) => total + stock.gain, 0) >
                     0
-                      ? "text-green-600"
-                      : "text-red-600"
+                      ? "text-pri"
+                      : "text-brightRed"
                   } hidden md:block`}
                 >
                   ₹
@@ -132,8 +132,8 @@ const Holdings = ({ data, setActiveIndex }) => {
                   <div
                     className={`${
                       stock.currentPrice - stock.previousClosePrice > 0
-                        ? "text-green-600"
-                        : "text-red-600"
+                        ? "text-pri"
+                        : "text-brightRed"
                     }`}
                   >
                     {stock.currentPrice - stock.previousClosePrice > 0
@@ -147,7 +147,7 @@ const Holdings = ({ data, setActiveIndex }) => {
                   </div>
                   <div
                     className={`${
-                      stock.gain > 0 ? "text-green-600" : "text-red-600"
+                      stock.gain > 0 ? "text-pri" : "text-brightRed"
                     }`}
                   >
                     {stock.gain > 0 ? "+" : "-"} ₹
@@ -158,7 +158,7 @@ const Holdings = ({ data, setActiveIndex }) => {
                   </div>
                   <div
                     className={`${
-                      stock.gain > 0 ? "text-green-600" : "text-red-600"
+                      stock.gain > 0 ? "text-pri" : "text-brightRed"
                     } hidden md:block`}
                   >
                     ₹{Math.abs(stock.worth).toFixed(2)}

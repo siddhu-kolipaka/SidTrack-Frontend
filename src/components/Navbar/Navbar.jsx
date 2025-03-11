@@ -58,7 +58,7 @@ const SlideTabs = () => {
                   opacity: 0,
                 }));
               }}
-              className=" fixed z-50 flex justify-evenly items-center w-fit h-12 rounded-full bg-pri px-1 border-2 border-bord"
+              className=" fixed z-50 flex justify-evenly items-center w-fit h-12 rounded-full bg-back px-1 border border-pri"
             >
               <Tab to="/" setPosition={setPosition}>
                 Home
@@ -166,7 +166,7 @@ const Cursor = ({ position }) => {
       transition={{
         opacity: { duration: 0 },
       }}
-      className="absolute z-0 h-10 rounded-full bg-back"
+      className="absolute z-0 h-10 rounded-full bg-pri"
     />
   );
 };

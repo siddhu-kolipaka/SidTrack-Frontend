@@ -39,9 +39,10 @@ export default {
         back: "#1E1E1E",
         heading: "#FFFAF0",
         txt: "#B0A8B9",
-        pri: "#4CAF50",
+        pri: "#02e054",
         border: "#2A2A2A",
         sec: "#3da9fc",
+        brightRed: "#FF0000",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

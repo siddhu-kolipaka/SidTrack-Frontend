@@ -74,7 +74,7 @@ const ForgotPassword = () => {
           className="flex flex-col gap-4 p-4 w-[80dvw] md:w-1/2"
           onSubmit={handleSubmit}
         >
-          <Input color1="#282829" color2="#4CAF50" className="rounded-xl p-px">
+          <Input color1="#282829" color2="#02e054" className="rounded-xl p-px">
             <input
               type="email"
               placeholder="Email"
@@ -83,7 +83,9 @@ const ForgotPassword = () => {
               className="rounded-xl focus:outline-none h-12 text-txt px-4 bg-back w-full"
             />
           </Input>
-          <div className="text-red-600 text-sm text-center">{errorMessage}</div>
+          <div className="text-brightRed text-sm text-center">
+            {errorMessage}
+          </div>
           <motion.button
             whileTap={{ scale: 0.95 }}
             whileHover={{ scale: 1.05 }}

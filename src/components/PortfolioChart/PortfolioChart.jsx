@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 const generateColors = (num) => {
   const hueStep = 360 / num;
   return Array.from({ length: num }).map(
-    (_, index) => `hsl(${hueStep * index}, 75%, 50%)`
+    (_, index) => `hsl(${hueStep * index}, 90%, 60%)`
   );
 };
 
@@ -41,7 +41,7 @@ const renderActiveShape = (props, isSmallScreen, data, activeIndex) => {
 
   return (
     <g>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill} className="">
+      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
         {data[activeIndex].totalQty} | {data[activeIndex].stockSymbol}
       </text>
 
@@ -165,4 +165,5 @@ const PortfolioChart = ({ data, setActiveIndex, activeIndex }) => {
     </>
   );
 };
+
 export default PortfolioChart;

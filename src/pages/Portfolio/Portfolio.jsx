@@ -124,7 +124,7 @@ const Portfolio = () => {
                 <div className="text-pri ">Day Gain</div>
                 <div
                   className={`${
-                    totalDayGain > 0 ? "text-green-600" : "text-red-600 "
+                    totalDayGain > 0 ? "text-pri" : "text-brightRed "
                   }`}
                 >
                   {totalDayGain > 0 ? "+" : "-"}₹
@@ -135,7 +135,7 @@ const Portfolio = () => {
                 <div className="text-pri ">Total Gain</div>
                 <div
                   className={`${
-                    totalGain > 0 ? "text-green-600" : "text-red-600 "
+                    totalGain > 0 ? "text-pri" : "text-brightRed "
                   }`}
                 >
                   {totalGain > 0 ? "+" : "-"}₹{Math.abs(totalGain).toFixed(2)}
@@ -148,13 +148,8 @@ const Portfolio = () => {
             </div>
             <div className="w-full flex gap-2 md:gap-8 justify-center">
               <div className="flex justify-center items-center">
-                <AddTransactionDialog />
-              </div>
-              <div className="flex justify-center items-center">
                 <motion.button
-                  whileTap={{ scale: 0.95 }}
-                  whileHover={{ scale: 1.05 }}
-                  className="text-back bg-pri rounded-lg uppercase font-bold py-4 px-4 md:px-8 text-xs"
+                  className=" text-pri ring-1 ring-pri hover:bg-pri hover:text-back hover:scale-110 duration-200 rounded-xl uppercase  py-4 px-4 md:px-8 text-xs font-semibold"
                   onClick={() => {
                     navigate("/transactionLog");
                   }}
@@ -164,12 +159,16 @@ const Portfolio = () => {
               </div>
               <div className="flex justify-center items-center">
                 <motion.button
-                  whileTap={{ scale: 0.95 }}
-                  whileHover={{ scale: 1.05 }}
-                  className="text-back bg-pri rounded-lg uppercase font-bold py-4 px-4 md:px-8 text-xs"
+                  className=" text-pri ring-1 ring-pri hover:bg-pri hover:text-back hover:scale-110 duration-200 rounded-xl uppercase  py-4 px-4 md:px-8 text-xs font-semibold"
+                  onClick={() => {
+                    navigate("/PnL");
+                  }}
                 >
                   Profit and Loss Log
                 </motion.button>
+              </div>
+              <div className="flex justify-center items-center">
+                <AddTransactionDialog />
               </div>
             </div>
           </div>

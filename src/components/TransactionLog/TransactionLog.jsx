@@ -98,9 +98,7 @@ const TransactionLog = () => {
                       <div>{tx.qty}</div>
                       <div
                         className={
-                          tx.action === "BUY"
-                            ? "text-green-600"
-                            : "text-red-600"
+                          tx.action === "BUY" ? "text-pri" : "text-brightRed"
                         }
                       >
                         {tx.action}
@@ -159,7 +157,7 @@ const TransactionLog = () => {
           )}
         </div>
 
-        <div className="hidden md:block w-full font-semibold">
+        <div className="hidden md:block w-full">
           <Table>
             <thead>
               <tr className="grid grid-cols-[1fr,1fr,1fr,1fr,1fr,1fr,1fr] justify-items-center place-items-center py-4  bg-pri text-back rounded-xl">
@@ -206,7 +204,7 @@ const TransactionLog = () => {
                     <td>&#8377;{parseFloat(tx.price * tx.qty).toFixed(2)}</td>
                     <td
                       className={
-                        tx.action === "BUY" ? "text-green-600" : "text-red-600"
+                        tx.action === "BUY" ? "text-pri" : "text-brightRed"
                       }
                     >
                       {tx.action}

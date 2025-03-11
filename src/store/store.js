@@ -5,6 +5,7 @@ import trackerReducer from "./tracker/trackerSlice";
 import stockReducer from "./stock/stockSlice";
 import gainsReducer from "./gains/gainsSlice";
 import wealthReducer from "./wealth/wealthSlice";
+import metricsReducer from "./metrics/metricsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     stock: stockReducer,
     gains: gainsReducer,
     wealth: wealthReducer,
+    metrics: metricsReducer,
   },
 });

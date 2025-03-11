@@ -51,7 +51,7 @@ const Profile = () => {
               <motion.button
                 whileTap={{ scale: 0.95 }}
                 whileHover={{ scale: 1.05 }}
-                className="py-2 px-6 bg-green-600 rounded-xl"
+                className="py-2 px-6 text-pri ring-1 ring-pri   rounded-xl"
                 onClick={() => navigate("/forgotPassword")}
               >
                 Reset Password
@@ -59,7 +59,7 @@ const Profile = () => {
               <motion.button
                 whileTap={{ scale: 0.95 }}
                 whileHover={{ scale: 1.05 }}
-                className="py-2 px-6 bg-red-600 rounded-xl "
+                className="py-2 px-6 text-brightRed ring-1 ring-brightRed   rounded-xl "
                 onClick={() => navigate("/deleteAccount")}
               >
                 Delete Account

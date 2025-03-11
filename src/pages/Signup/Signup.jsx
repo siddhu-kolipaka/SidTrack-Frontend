@@ -114,7 +114,7 @@ const Signup = () => {
           className="flex flex-col w-[80dvw] gap-4 p-4 md:w-1/2"
           onSubmit={handleSubmitSignup}
         >
-          <Input color1="#282829" color2="#4CAF50" className="rounded-xl p-px">
+          <Input color1="#282829" color2="#02e054" className="rounded-xl p-px">
             <input
               type="email"
               placeholder="Email"
@@ -124,7 +124,7 @@ const Signup = () => {
               autoComplete="off"
             />
           </Input>
-          <Input color1="#282829" color2="#4CAF50" className="rounded-xl p-px ">
+          <Input color1="#282829" color2="#02e054" className="rounded-xl p-px ">
             <input
               type="text"
               placeholder="Username"
@@ -134,7 +134,7 @@ const Signup = () => {
               autoComplete="off"
             />
           </Input>
-          <Input color1="#282829" color2="#4CAF50" className="rounded-xl p-px">
+          <Input color1="#282829" color2="#02e054" className="rounded-xl p-px">
             <input
               type="password"
               placeholder="Password"
@@ -144,7 +144,7 @@ const Signup = () => {
               autoComplete="off"
             />
           </Input>
-          <Input color1="#282829" color2="#4CAF50" className="rounded-xl p-px">
+          <Input color1="#282829" color2="#02e054" className="rounded-xl p-px">
             <input
               type="password"
               placeholder="Confirm Password"
@@ -164,8 +164,8 @@ const Signup = () => {
                 key={"errorMessage"}
                 className={`${
                   errorMessage === "Passwords matched"
-                    ? "text-green-600"
-                    : "text-red-600"
+                    ? "text-pri"
+                    : "text-brightRed"
                 } text-sm text-center`}
               >
                 {errorMessage}

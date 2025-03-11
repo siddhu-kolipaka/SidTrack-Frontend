@@ -8,12 +8,12 @@ const Input = ({ color1, color2, duration = 4, children, className = "" }) => {
   return (
     <motion.div
       initial={{
-        background: `linear-gradient(0deg, ${color1} 0% 30%, ${color2} 45% 65%, ${color1} 70% 100%)`,
+        background: `linear-gradient(0deg, ${color1} 0% 20%, ${color2} 35% 65%, ${color1} 80% 100%)`,
       }}
       animate={
         interactionState === "play" || focus
           ? {
-              background: `linear-gradient(360deg, ${color1} 0% 30%, ${color2} 45% 65%, ${color1} 70% 100%)`,
+              background: `linear-gradient(360deg, ${color1} 0% 20%, ${color2} 35% 65%, ${color1} 80% 100%)`,
               transition: {
                 duration,
                 repeat: Infinity,

@@ -14,9 +14,7 @@ const CustomTooltip = ({ active, payload, label }) => {
       <div
         className={`
           ${
-            payload[0].payload.type === "Income"
-              ? "text-green-600"
-              : "text-red-600"
+            payload[0].payload.type === "Income" ? "text-pri" : "text-brightRed"
           }
          bg-back border border-border rounded-lg py-2 px-4 `}
       >
@@ -59,7 +57,7 @@ const TrackerChart = ({ data, categories, fill, type }) => {
 
   return (
     <>
-      <div className={type === "Income" ? "text-green-600" : "text-red-600"}>
+      <div className={type === "Income" ? "text-pri" : "text-brightRed"}>
         Total {type} : {total}
       </div>
       <div className="w-full h-[40dvh] md:w-[33dvw] md:h-[35dvh]">

@@ -117,18 +117,18 @@ const Tracker = () => {
           className="md:w-fit"
         />
         <div className="flex flex-col md:flex-row gap-4 h-full py-[10dvh] px-4 ">
-          <motion.div className="flex flex-col md:w-[35%] gap-4">
+          <motion.div className="flex flex-col md:w-[35%] gap-4 order-2 md:order-1">
             {/* income chart */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.5 }}
-              className="w-full h-1/2  rounded-xl place-content-center place-items-center"
+              className="w-full h-1/2  rounded-xl place-content-center place-items-center  md:hover:shadow-2xl md:hover:scale-100 md:scale-95  duration-150"
             >
               <TrackerChart
                 data={data}
                 categories={incomeCategories}
-                fill="#16a34a"
+                fill="#02e054"
                 type="Income"
               />
             </motion.div>
@@ -136,8 +136,8 @@ const Tracker = () => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1 }}
-              className="w-full h-1/2  rounded-xl place-content-center place-items-center"
+              transition={{ duration: 1, delay: 0.5 }}
+              className="w-full h-1/2  rounded-xl place-content-center place-items-center  md:hover:shadow-2xl md:hover:scale-100 md:scale-95  duration-150"
             >
               <TrackerChart
                 data={data}
@@ -153,7 +153,7 @@ const Tracker = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
-            className="md:w-[30%] border-2 border-border flex flex-col justify-center gap-8 items-center rounded-xl"
+            className="md:w-[30%] border-2 border-border   flex flex-col justify-center gap-8 items-center rounded-xl order-1 md:order-2 py-8 "
           >
             <div className="text-3xl font-bold text-center text-txt">
               Tracker
@@ -241,11 +241,8 @@ const Tracker = () => {
               <motion.button
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 3 }}
-                whileTap={{ scale: 0.95 }}
-                whileHover={{ scale: 1.05 }}
                 type="submit"
-                className="rounded-lg bg-pri w-full h-12"
+                className="text-pri ring-1 ring-pri hover:bg-pri hover:text-back hover:scale-110 duration-200 rounded-xl w-full h-12 "
                 disabled={loading}
               >
                 {loading ? <Spinner /> : "Add Transaction"}
@@ -256,28 +253,14 @@ const Tracker = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.5 }}
-            className="md:w-[35%]  h-full   rounded-xl "
+            transition={{ duration: 1, delay: 0.5 }}
+            className="md:w-[35%]  h-full   rounded-xl  order-3 "
           >
-            <div className="flex flex-col h-[10%] gap-2 md:flex-row rounded-xl  justify-between items-center py-6 px-4 bg-back text-txt font-semibold">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 2 }}
-                className="flex items-center gap-2"
-              >
-                <div>From:</div>
-                <DatePicker date={fromDate} setDate={setFromDate} />
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 2 }}
-                className="flex items-center gap-2"
-              >
-                <div> To:</div>
-                <DatePicker date={toDate} setDate={setToDate} />
-              </motion.div>
+            <div className="grid grid-cols-[0.5fr,1fr] md:grid-cols-[0.5fr,1fr,0.5fr,1fr] place-content-center justify-items-center place-items-center gap-2 h-[10%] rounded-xl p-6 bg-back text-txt font-semibold">
+              <div>From:</div>
+              <DatePicker date={fromDate} setDate={setFromDate} />
+              <div> To:</div>
+              <DatePicker date={toDate} setDate={setToDate} />
             </div>
             <div className="w-full grid grid-cols-[1fr,1fr,1fr,1fr,0.2fr] justify-items-center place-items-center text-xs md:text-sm py-4  bg-pri text-back font-semibold rounded-xl">
               <div>DATE</div>
@@ -304,9 +287,7 @@ const Tracker = () => {
                         </div>
                         <div
                           className={
-                            tx.type === "Income"
-                              ? "text-green-600"
-                              : "text-red-600"
+                            tx.type === "Income" ? "text-pri" : "text-brightRed"
                           }
                         >
                           {tx.type}
@@ -314,9 +295,7 @@ const Tracker = () => {
                         <div>{tx.category}</div>
                         <div
                           className={
-                            tx.type === "Income"
-                              ? "text-green-600"
-                              : "text-red-600"
+                            tx.type === "Income" ? "text-pri" : "text-brightRed"
                           }
                         >
                           <div>&#8377;{tx.amount}</div>

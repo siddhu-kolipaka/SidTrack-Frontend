@@ -113,14 +113,14 @@ const NetWorth = () => {
               <YAxis yAxisId="left" />
               <Tooltip content={CustomTooltip} />
               <Legend />
-              <Brush height={30} fill="#1E1E1E" stroke="#3da9fc" />
+              <Brush height={30} fill="#1E1E1E" stroke="#02e054" />
 
               <Area
                 yAxisId="left"
                 type="monotone"
                 dataKey="wealth"
-                stroke="#3da9fc"
-                fill="#3da9fc"
+                stroke="#02e054"
+                fill="#02e054"
               />
 
               {/* <Area
@@ -167,7 +167,7 @@ const NetWorth = () => {
             whileTap={{ scale: 0.95 }}
             whileHover={{ scale: 1.05 }}
             type="submit"
-            className="rounded-xl bg-green-600 w-full h-10 md:px-10 py-2 text-back uppercase "
+            className="rounded-xl  w-full h-10 md:px-10 py-2 text-pri ring-1 ring-pri    uppercase "
             disabled={loading}
           >
             Update
@@ -175,10 +175,9 @@ const NetWorth = () => {
           <motion.button
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
             whileTap={{ scale: 0.95 }}
             whileHover={{ scale: 1.05 }}
-            className="rounded-xl bg-red-600 w-full h-10 md:px-10 py-2 text-back uppercase "
+            className="rounded-xl  w-full h-10 md:px-10 py-2  uppercase  text-brightRed ring-1 ring-brightRed "
             disabled={loading}
             onClick={() => {
               dispatch(deleteWealth({ date: convertDate(date) }));

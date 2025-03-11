@@ -44,7 +44,7 @@ export const getGains = createAsyncThunk(
         }
       );
 
-      return response.data.gains;
+      return response.data;
     } catch (err) {
       return rejectWithValue(
         err.response?.data?.message || "Fetching gains failed"

@@ -4,9 +4,8 @@ import Signup from "./pages/Signup/Signup";
 import Navbar from "./components/Navbar/Navbar";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 
-import { motion, useScroll, useMotionValueEvent } from "motion/react";
+import { motion } from "motion/react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeScrollDirection } from "./store/scrollDirection/scrollDirectionSlice";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { getNewAccessToken } from "./store/auth/authThunks";
@@ -22,20 +21,12 @@ import Tracker from "./pages/Tracker/Tracker";
 import Loading from "./pages/Loading/Loading";
 import InvestmentCalc from "./pages/InvestmentCalc/InvestmentCalc";
 import About from "./pages/About/About";
+import PnL from "./pages/PnL/PnL";
+import { useScrollDirection } from "./utils/useScrollDirection";
 
 const App = () => {
-  const { scrollY } = useScroll();
+  useScrollDirection();
   const dispatch = useDispatch();
-  const { scrollDirection } = useSelector((state) => state.scrollDirection);
-
-  useMotionValueEvent(scrollY, "change", (current) => {
-    const diff = current - scrollY.getPrevious();
-    if (scrollDirection == "up" && diff > 0) {
-      dispatch(changeScrollDirection({ scrollDirection: "down" }));
-    } else if (scrollDirection == "down" && diff < 0) {
-      dispatch(changeScrollDirection({ scrollDirection: "up" }));
-    }
-  });
 
   const { user, isAuthenticated } = useSelector((state) => state.auth);
 
@@ -64,6 +55,7 @@ const App = () => {
             <Route path="/profile" element={<Profile />}></Route>
             <Route path="/deleteAccount" element={<DeleteAccount />}></Route>
             <Route path="/transactionLog" element={<TransactionLog />}></Route>
+            <Route path="/PnL" element={<PnL />}></Route>
             <Route path="/tracker" element={<Tracker />}></Route>
             <Route path="/portfolio" element={<Portfolio />}></Route>
             <Route path="/calc" element={<InvestmentCalc />}></Route>
