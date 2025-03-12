@@ -62,7 +62,7 @@ const Login = () => {
             navigate("/verifyEmail");
           }, 2000);
         } else {
-          navigate("/");
+          navigate("/profile");
         }
       } else {
         const errorMsg = result.payload || "Login failed. Please try again.";

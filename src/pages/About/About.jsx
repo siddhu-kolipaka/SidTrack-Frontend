@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import CountUp from "react-countup";
-import { NavLink } from "react-router";
-import img1 from "../../assets/img1.svg";
 import img2 from "../../assets/img2.svg";
 import img3 from "../../assets/img3.svg";
 import img5 from "../../assets/img5.svg";
@@ -10,12 +8,35 @@ import img6 from "../../assets/img6.svg";
 import img7 from "../../assets/img7.svg";
 import jwt from "../../assets/JWT.svg";
 import { getMetrics, updateMetrics } from "@/store/metrics/metricsThunks";
+import Spinner from "@/components/Spinner/Spinner";
+import { motion, AnimatePresence } from "motion/react";
+
+const Spline = lazy(() => import("@splinetool/react-spline"));
+
+const ResponsiveSpline = () => {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <div className="relative w-[100dvw] h-[100dvh] hidden md:block">
+      {!loaded && (
+        <div className="absolute inset-0 flex justify-center items-center gap-4 text-3xl text-txt">
+          Loading 3D scene
+          <Spinner />
+        </div>
+      )}
+      <Spline
+        scene="https://draft.spline.design/7pwrTGfjwzEfm4Ic/scene.splinecode"
+        className="w-full h-full"
+        onLoad={() => setLoaded(true)}
+      />
+    </div>
+  );
+};
 
 const Metric = ({ title, value }) => {
   return (
-    <div className="grid grid-cols-2 gap-4 place-items-center">
+    <div className="grid grid-cols-2 gap-0 place-items-center">
       <div>{title} :</div>
-      <div className="text-3xl text-pri">
+      <div className="text-xl text-pri">
         <CountUp end={value || 0} duration={2} />
       </div>
     </div>
@@ -23,9 +44,10 @@ const Metric = ({ title, value }) => {
 };
 
 const About = () => {
+  const [open, setOpen] = useState(false);
+
   const dispatch = useDispatch();
   const data = useSelector((state) => state.metrics.data);
-
   useEffect(() => {
     if (!sessionStorage.getItem("visit")) {
       dispatch(updateMetrics({ type: "pageVisits" }));
@@ -39,50 +61,70 @@ const About = () => {
     }
     dispatch(getMetrics());
   }, [dispatch]);
-
   return (
     <div className="w-full flex flex-col items-center bg-back">
-      {/* Hero Section */}
-      <section className="w-full min-h-screen flex flex-col md:flex-row justify-center items-center">
-        <div className="md:w-1/2 flex flex-col gap-16 justify-evenly items-center text-[#DFF7E5] px-4 py-16">
-          <div className="flex flex-col items-center">
-            <div className="font-bold text-7xl flex">
+      <section className="w-full min-h-screen flex flex-col md:flex-row justify-center items-center md:justify-start md:items-start relative">
+        <Suspense
+          fallback={
+            <div className="w-full h-full text-3xl text-txt grid place-content-center">
+              Loading 3D scene...
+            </div>
+          }
+        >
+          <ResponsiveSpline />
+        </Suspense>
+        <div className="md:w-full md:flex justify-between text-[#DFF7E5] absolute hidden">
+          <div className="w-fit flex flex-col px-8 py-4 items-center">
+            <div className="font-bold text-5xl flex">
               <div>Sid</div>
               <div className="text-pri">Track</div>
             </div>
-            <div className="text-lg tracking-widest">Track your wealth.</div>
+            <div className="text-sm tracking-wide">Track your wealth.</div>
           </div>
-          <div className="flex justify-center gap-4">
-            <NavLink
-              to="/signup"
-              className="py-2 px-6 text-pri ring-1 ring-pri hover:bg-pri hover:text-back hover:scale-110 duration-200 rounded-xl"
-            >
-              Join us
-            </NavLink>
-            <NavLink
-              to="/login"
-              className="py-2 px-6 text-back bg-pri hover:text-pri hover:ring-1 hover:ring-pri hover:bg-back hover:scale-110 duration-200 rounded-xl"
-            >
-              Log In
-            </NavLink>
-          </div>
-          <div className="w-fit grid grid-cols-1 text-base">
+          <div className="w-fit grid grid-cols-1 text-base py-4">
             <Metric title="Page Views" value={data.pageViews} />
             <Metric title="Page Visits" value={data.pageVisits} />
             <Metric title="Unique Visits" value={data.uniqueVisits} />
-            <Metric title="Current Users" value={data.users} />
+            <Metric title="Registered Users" value={data.users} />
           </div>
         </div>
-        <div className="md:w-fit md:h-[100dvh] hidden md:block bg-[#DFF7E5] overflow-hidden">
-          <img
-            src={img1}
-            alt="Title"
-            className="w-full h-full object-contain"
-          />
+        <div className="md:w-1/2 flex flex-col justify-evenly items-center gap-4 text-[#DFF7E5] px-4 py-16 absolute md:hidden">
+          <div className="flex flex-col items-center">
+            <div className="font-bold text-4xl flex">
+              <div>Sid</div>
+              <div className="text-pri">Track</div>
+            </div>
+            <div className="text-xs tracking-widest">Track your wealth.</div>
+          </div>
+
+          <div className="w-fit grid grid-cols-1 text-base ">
+            <motion.button
+              onClick={() => setOpen(!open)}
+              className="w-fit h-fit text-sm py-2 px-4 text-pri ring-1 ring-pri rounded-xl mx-auto"
+              whileTap={{ color: "#000000", backgroundColor: "#02e054" }}
+            >
+              Metrics
+            </motion.button>
+            <AnimatePresence>
+              {open && (
+                <motion.div
+                  key="metrics"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="grid grid-cols-1 gap-2 overflow-hidden mt-8"
+                >
+                  <Metric title="Page Views" value={data.pageViews} />
+                  <Metric title="Page Visits" value={data.pageVisits} />
+                  <Metric title="Unique Visits" value={data.uniqueVisits} />
+                  <Metric title="Registered Users" value={data.users} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </section>
-
-      {/* Advanced JWT (Image Left, Text Right on Desktop) */}
       <section className="w-full min-h-screen flex flex-col md:flex-row justify-evenly items-center bg-back px-4 py-16">
         <div className="w-full md:w-fit md:h-[60vh] rounded-3xl overflow-hidden mb-8 md:mb-0">
           <img
@@ -105,8 +147,6 @@ const About = () => {
           </p>
         </div>
       </section>
-
-      {/* Portfolio Tracker (Text Left, Image Right on Desktop) */}
       <section className="w-full min-h-screen flex flex-col md:flex-row-reverse justify-evenly items-center bg-back px-4 py-16">
         <div className="w-full md:w-fit md:h-[60vh] rounded-3xl overflow-hidden mb-8 md:mb-0">
           <img
@@ -129,8 +169,6 @@ const About = () => {
           </p>
         </div>
       </section>
-
-      {/* Cashflow Tracker (Image Left, Text Right on Desktop) */}
       <section className="w-full min-h-screen flex flex-col md:flex-row justify-evenly items-center bg-back px-4 py-16">
         <div className="w-full md:w-fit md:h-[60vh] rounded-3xl overflow-hidden mb-8 md:mb-0">
           <img
@@ -152,8 +190,6 @@ const About = () => {
           </p>
         </div>
       </section>
-
-      {/* Investment Calculator (Text Left, Image Right on Desktop) */}
       <section className="w-full min-h-screen flex flex-col md:flex-row-reverse justify-evenly items-center bg-back px-4 py-16">
         <div className="w-full md:w-fit md:h-[60vh] rounded-3xl overflow-hidden mb-8 md:mb-0">
           <img
@@ -177,8 +213,6 @@ const About = () => {
           </p>
         </div>
       </section>
-
-      {/* Networth Tracker (Image Left, Text Right on Desktop) */}
       <section className="w-full min-h-screen flex flex-col md:flex-row justify-evenly items-center bg-back px-4 py-16">
         <div className="w-full md:w-fit md:h-[60vh] rounded-3xl overflow-hidden mb-8 md:mb-0">
           <img
@@ -198,8 +232,6 @@ const About = () => {
           </p>
         </div>
       </section>
-
-      {/* Transaction Log (Text Left, Image Right on Desktop) */}
       <section className="w-full min-h-screen flex flex-col md:flex-row-reverse justify-evenly items-center bg-back px-4 py-16">
         <div className="w-full md:w-fit md:h-[60vh] rounded-3xl overflow-hidden mb-8 md:mb-0">
           <img
@@ -220,8 +252,6 @@ const About = () => {
           </p>
         </div>
       </section>
-
-      {/* Profit and Loss Tracker (Image Left, Text Right on Desktop) */}
       <section className="w-full min-h-screen flex flex-col md:flex-row justify-evenly items-center bg-back px-4 py-16">
         <div className="w-full md:w-fit md:h-[60vh] rounded-3xl overflow-hidden mb-8 md:mb-0">
           <img
