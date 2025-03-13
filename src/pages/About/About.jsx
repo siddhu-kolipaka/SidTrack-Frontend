@@ -18,7 +18,7 @@ const ResponsiveSpline = () => {
   return (
     <div className="relative w-[100dvw] h-[100dvh] hidden md:block">
       {!loaded && (
-        <div className="absolute inset-0 flex justify-center items-center gap-4 text-3xl text-txt">
+        <div className="absolute inset-0 hidden  md:flex md:justify-center md:items-center md:gap-4 text-3xl text-txt">
           Loading 3D scene
           <Spinner />
         </div>
@@ -66,8 +66,9 @@ const About = () => {
       <section className="w-full min-h-screen flex flex-col md:flex-row justify-center items-center md:justify-start md:items-start relative">
         <Suspense
           fallback={
-            <div className="w-full h-full text-3xl text-txt grid place-content-center">
-              Loading 3D scene...
+            <div className="w-[100dvw] h-[100dvh] hidden  inset-0 md:flex md:justify-center md:items-center md:gap-4 text-3xl text-txt">
+              Loading 3D scene
+              <Spinner />
             </div>
           }
         >
