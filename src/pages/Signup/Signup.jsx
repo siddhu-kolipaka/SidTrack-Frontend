@@ -32,9 +32,11 @@ const Signup = () => {
   };
 
   const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setErrorMessage("Invalid email format");
+    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+    if (!gmailRegex.test(email)) {
+      setErrorMessage(
+        "Please provide a valid Gmail address. Ex:sample@gmail.com"
+      );
       return false;
     }
     setErrorMessage("");
